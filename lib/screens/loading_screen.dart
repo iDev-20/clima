@@ -1,9 +1,11 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
+import 'package:clima/screens/location_screen.dart';
 import 'package:clima/services/location.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:clima/services/networking.dart';
+import 'package:clima/utilities/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const apiKey = 'a97768d238ad7ce82199db665e8ac84d';
 
@@ -15,48 +17,41 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  double? latitude;
-  double? longitude;
-
 //Runs once before the build method
   @override
   void initState() {
     super.initState();
-    getLocation();
+    getLocationData();
   }
 
-  void getLocation() async {
+  void getLocationData() async {
     Location location = Location();
+
     await location.getCurrentLocation();
-    latitude = location.latitude;
-    longitude = location.longitude;
-    getData();
-  }
 
-  void getData() async {
-    http.Response response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey'));
+    NetworkHelper networkHelper =
+        NetworkHelper('https://api.openweathermap.org/data/2.5/weather?'
+            'lat=${location.latitude}&lon=${location.longitude}'
+            '&appid=$apiKey&units=metric');
 
-      if (response.statusCode == 200) {
-        String data = response.body;
-        // print(data);
+    var weatherData = await networkHelper.getData();
 
-        var decodedData = jsonDecode(data);
-
-        double temperature = decodedData['main']['temp'];
-        int conditionId = decodedData['weather'][0]['id'];
-        String cityName = decodedData['name'];
-
-        print(temperature);
-        print(conditionId);
-        print(cityName);
-      } else {
-        print(response.statusCode);
-      }
+    Navigation.navigateToScreen(
+        context: context,
+        screen: LocationScreen(
+          locationWeather: weatherData,
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return const Scaffold(
+      body: Center(
+        child: SpinKitDoubleBounce(
+          color: Colors.white,
+          size: 100.0,
+        ),
+      ),
+    );
   }
 }
