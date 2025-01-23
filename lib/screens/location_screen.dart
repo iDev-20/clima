@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:clima/screens/city_screen.dart';
 import 'package:clima/screens/loading_screen.dart';
 import 'package:clima/services/weather.dart';
@@ -78,23 +80,28 @@ class _LocationScreenState extends State<LocationScreen> {
                         var weatherData = await weather.getLocationWeather();
                         updateUI(weatherData);
                       },
-                      // style: ButtonStyle(
-                      //   backgroundColor: MaterialStateProperty.all(Colors.transparent),
-                      //   elevation: MaterialStateProperty.all(0)
-                      // ),
+                      style: kButtonStyle,
                       child: const Icon(
                         Icons.near_me,
                         size: 35.0,
+                        color: kIconColor,
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        Navigation.navigateToScreen(
+                      onPressed: () async {
+                        var typedName = await Navigation.navigateToScreen(
                             context: context, screen: const CityScreen());
+                        if (typedName != null) {
+                          var weatherData =
+                              await weather.getCityWeather(typedName);
+                          updateUI(weatherData);
+                        }
                       },
+                      style: kButtonStyle,
                       child: const Icon(
                         Icons.location_city,
                         size: 35.0,
+                        color: kIconColor,
                       ),
                     ),
                   ],
