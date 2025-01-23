@@ -22,32 +22,35 @@ class _CityScreenState extends State<CityScreen> {
         ),
         constraints: const BoxConstraints.expand(),
         child: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topLeft,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigation.back(context: context);
-                  },
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    size: 35.0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigation.back(context: context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back_ios,
+                      size: 25.0,
+                    ),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(20.0),
-                child: null,
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'Get Weather',
-                  style: kButtonTextStyle,
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  child: null,
                 ),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Get Weather',
+                    style: kButtonTextStyle,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -64,7 +64,14 @@ class _LocationScreenState extends State<LocationScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        var weatherData = await weather.getLocationWeather();
+                        updateUI(weatherData);
+                      },
+                      // style: ButtonStyle(
+                      //   backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                      //   elevation: MaterialStateProperty.all(0)
+                      // ),
                       child: const Icon(
                         Icons.near_me,
                         size: 35.0,
