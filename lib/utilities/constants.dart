@@ -16,3 +16,5 @@ const kButtonTextStyle = TextStyle(
 );
 
 const kConditionTextStyle = TextStyle(fontSize: 100.0);
+
+const kErrorMessageTextStyle = TextStyle(fontSize: 16.0);

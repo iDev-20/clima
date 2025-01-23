@@ -28,6 +28,13 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(dynamic weatherData) {
     setState(() {
+      if (weatherData == null) {
+        temperature = 0;
+        weatherIcon = 'Error';
+        weatherMessage = 'Unable to get weather data';
+        cityName = 'your city';
+        return;
+      }
       double temp = weatherData['main']['temp'];
       temperature = temp.toInt();
 
@@ -105,6 +112,12 @@ class _LocationScreenState extends State<LocationScreen> {
                   '$weatherMessage in $cityName!',
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
+                ),
+                if(weatherIcon == 'Error')
+                const Text(
+                  "Ensure your phone's location is turned on, "
+                  "check your internet connection, then try again.",
+                  style: kErrorMessageTextStyle,
                 ),
               ],
             ),
