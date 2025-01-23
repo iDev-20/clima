@@ -1,4 +1,5 @@
 import 'package:clima/screens/city_screen.dart';
+import 'package:clima/screens/loading_screen.dart';
 import 'package:clima/services/weather.dart';
 import 'package:clima/utilities/navigation.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,8 @@ class _LocationScreenState extends State<LocationScreen> {
                   children: <Widget>[
                     ElevatedButton(
                       onPressed: () async {
+                        Navigation.navigateToScreen(
+                            context: context, screen: const LoadingScreen());
                         var weatherData = await weather.getLocationWeather();
                         updateUI(weatherData);
                       },
@@ -113,12 +116,12 @@ class _LocationScreenState extends State<LocationScreen> {
                   textAlign: TextAlign.right,
                   style: kMessageTextStyle,
                 ),
-                if(weatherIcon == 'Error')
-                const Text(
-                  "Ensure your phone's location is turned on, "
-                  "check your internet connection, then try again.",
-                  style: kErrorMessageTextStyle,
-                ),
+                if (weatherIcon == 'Error')
+                  const Text(
+                    "Ensure your phone's location is turned on, "
+                    "check your internet connection, then try again.",
+                    style: kErrorMessageTextStyle,
+                  ),
               ],
             ),
           ),
