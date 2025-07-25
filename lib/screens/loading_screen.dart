@@ -25,10 +25,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
     var weatherData = await WeatherModel().getLocationWeather();
 
     Navigation.navigateToScreen(
-        context: context,
-        screen: LocationScreen(
-          locationWeather: weatherData,
-        ));
+      context: context,
+      screen: LocationScreen(
+        locationWeather: weatherData,
+      ),
+    );
   }
 
   @override
