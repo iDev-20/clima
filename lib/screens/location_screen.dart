@@ -4,6 +4,7 @@ import 'package:clima/screens/city_screen.dart';
 import 'package:clima/screens/loading_screen.dart';
 import 'package:clima/services/weather.dart';
 import 'package:clima/utilities/navigation.dart';
+import 'package:clima/utilities/ui_model.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
 
@@ -29,7 +30,7 @@ class _LocationScreenState extends State<LocationScreen> {
     updateUI(widget.locationWeather);
   }
 
-  void updateUI(dynamic weatherData) {
+  void updateUI(Weather? weatherData) {
     setState(() {
       if (weatherData == null) {
         temperature = 0;
@@ -38,14 +39,11 @@ class _LocationScreenState extends State<LocationScreen> {
         cityName = 'your city';
         return;
       }
-      double temp = weatherData['main']['temp'];
-      temperature = temp.toInt();
 
-      var condition = weatherData['weather'][0]['id'];
-      weatherIcon = weather.getWeatherIcon(condition ?? 0);
-
-      cityName = weatherData['name'];
+      temperature = weatherData.temperature.toInt();
+      weatherIcon = weather.getWeatherIcon(weatherData.weatherId);
       weatherMessage = weather.getMessage(temperature ?? 0);
+      cityName = weatherData.cityName;
     });
   }
 

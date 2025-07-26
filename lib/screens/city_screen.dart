@@ -63,6 +63,7 @@ class _CityScreenState extends State<CityScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        FocusManager.instance.primaryFocus?.unfocus();
                         Navigation.back(context: context, result: cityName);
                       },
                       style: kButtonStyle,
